@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: audit-trail-service
+  name: audit-trail-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: audit-trail-service
+  template:
+    metadata:
+      labels:
+        app: audit-trail-service
+    spec:
+      containers:
+      - name: audit-trail-service
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/audit-trail-service:latest
+        imagePullPolicy: Always
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+        - containerPort: 9098
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - name: log-path
+          mountPath: /var/log/als
+      volumes:
+      - name: log-path
+        hostPath:
+          path: /var/log/als
+
+# service type clusterIp.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: audit-trail-service
+    k8s-app: audit-trail-service
+  name: audit-trail-service
+spec:
+  ports:
+  - name: http
+    port: 9098
+    protocol: TCP
+    targetPort: 9098
+  type: ClusterIP
+  selector:
+    app: audit-trail-service

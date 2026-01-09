@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: shipping-instruction-service
+  name: shipping-instruction-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shipping-instruction-service
+  template:
+    metadata:
+      labels:
+        app: shipping-instruction-service
+    spec:
+      nodeSelector:
+        node: node2
+      containers:
+      - name: shipping-instruction-service
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/shipping-instruction-service:latest
+        imagePullPolicy: Always
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+        - containerPort: 9544
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - name: log-path
+          mountPath: /var/log/als
+      volumes:
+      - name: log-path
+        hostPath:
+          path: /var/log/als
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shipping-instruction-service
+  labels:
+    app: shipping-instruction-service
+spec:
+  selector:
+    app: shipping-instruction-service
+  ports:
+    - protocol: TCP
+      port: 9544
+      targetPort: 9544
+  type: ClusterIP

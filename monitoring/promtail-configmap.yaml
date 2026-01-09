@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: promtail-config
+  namespace: loki
+data:
+  promtail.yaml: |
+    server:
+      http_listen_port: 9080
+      grpc_listen_port: 0
+    positions:
+      filename: /run/promtail/positions.yaml
+    clients:
+      - url: http://loki:3100/loki/api/v1/push
+    scrape_configs:
+      - job_name: node-logs
+        static_configs:
+          - targets:
+              - 192.168.106.121:9080
+              - 192.168.142.76:9080
+              - 192.168.189.20:9080
+            labels:
+              job: als
+              __path__: /var/log/als/*.log

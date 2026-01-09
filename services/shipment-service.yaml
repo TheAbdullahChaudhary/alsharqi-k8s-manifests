@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: shipment-service
+  name: shipment-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shipment-service
+  template:
+    metadata:
+      labels:
+        app: shipment-service
+    spec:
+      nodeSelector:
+        node: node1  # Node selection 
+      containers:
+      - name: shipment-service
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/shipment-service:latest
+        imagePullPolicy: Always
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+        - containerPort: 9084
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - name: log-path
+          mountPath: /var/log/als
+      volumes:
+      - name: log-path
+        hostPath:
+          path: /var/log/als
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: shipment-service
+    k8s-app: shipment-service
+  name: shipment-service
+spec:
+  ports:
+  - name: http
+    port: 9084
+    protocol: TCP
+    targetPort: 9084
+  type: ClusterIP
+  selector:
+    app: shipment-service

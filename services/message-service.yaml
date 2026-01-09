@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: message-service
+  name: message-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: message-service
+  template:
+    metadata:
+      labels:
+        app: message-service
+    spec:
+      nodeSelector:
+        node: node3
+      containers:
+      - name: message-service
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/message-service:latest
+        imagePullPolicy: Always
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+        - containerPort: 9199
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - name: log-path
+          mountPath: /var/log/als
+      volumes:
+      - name: log-path
+        hostPath:
+          path: /var/log/als
+
+# service type ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: message-service
+    k8s-app: message-service
+  name: message-service
+spec:
+  ports:
+  - name: http
+    port: 9199
+    protocol: TCP
+    targetPort: 9199
+  type: ClusterIP
+  selector:
+    app: message-service

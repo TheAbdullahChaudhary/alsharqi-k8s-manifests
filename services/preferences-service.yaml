@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: preferences-service
+  name: preferences-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: preferences-service
+  template:
+    metadata:
+      labels:
+        app: preferences-service
+    spec:
+      nodeSelector:
+        node: node1  # Node Selection to Node 1
+      containers:
+      - name: preferences-service
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/preferences-service:latest
+        imagePullPolicy: Always
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+        - containerPort: 9099
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - name: log-path
+          mountPath: /var/log/als
+      volumes:
+      - name: log-path
+        hostPath:
+          path: /var/log/als
+
+# service type ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: preferences-service
+    k8s-app: preferences-service
+  name: preferences-service
+spec:
+  ports:
+  - name: http
+    port: 9099
+    protocol: TCP
+    targetPort: 9099
+  type: ClusterIP
+  selector:
+    app: preferences-service

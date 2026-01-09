@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sailing-schedule-service
+  name: sailing-schedule-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sailing-schedule-service
+  template:
+    metadata:
+      labels:
+        app: sailing-schedule-service
+    spec:
+      nodeSelector:
+        node: node2
+      containers:
+      - name: sailing-schedule-service
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/sailing-schedules-service:latest
+        imagePullPolicy: Always
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+        - containerPort: 9089
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - name: log-path
+          mountPath: /var/log/als
+      volumes:
+      - name: log-path
+        hostPath:
+          path: /var/log/als
+
+# service type ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sailing-schedule-service
+    k8s-app: sailing-schedule-service
+  name: sailing-schedule-service
+spec:
+  ports:
+  - name: http
+    port: 9089
+    protocol: TCP
+    targetPort: 9089
+  type: ClusterIP
+  selector:
+    app: sailing-schedule-service

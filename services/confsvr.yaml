@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: config-server
+  name: config-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-server
+  template:
+    metadata:
+      labels:
+        app: config-server
+    spec:
+      nodeSelector:
+        node: node3
+      containers:
+      - name: config-server
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/confsvr:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8888
+          name: http
+          protocol: TCP
+# service type ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: config-server
+    k8s-app: config-server
+  name: config-server
+spec:
+  ports:
+  - name: http
+    port: 8888
+    protocol: TCP
+    targetPort: 8888
+  type: ClusterIP
+  selector:
+    app: config-server

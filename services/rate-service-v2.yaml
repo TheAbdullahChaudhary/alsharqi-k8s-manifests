@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rate-service-v2
+  name: rate-service-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rate-service-v2
+  template:
+    metadata:
+      labels:
+        app: rate-service-v2
+    spec:
+      nodeSelector:
+        node: node1  # Node Selection to Node 1 
+      containers:
+      - name: rate-service-v2
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/rate-service-v2:latest
+        imagePullPolicy: Always
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+        - containerPort: 9082
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - name: log-path
+          mountPath: /var/log/als
+      volumes:
+      - name: log-path
+        hostPath:
+          path: /var/log/als
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rate-service-v2
+    k8s-app: rate-service-v2
+  name: rate-service-v2
+spec:
+  ports:
+  - name: http
+    port: 9082
+    protocol: TCP
+    targetPort: 9082
+  type: ClusterIP
+  selector:
+    app: rate-service-v2

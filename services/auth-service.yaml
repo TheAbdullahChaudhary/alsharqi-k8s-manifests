@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: auth-service
+  name: auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      nodeSelector:
+        node: node2
+      containers:
+      - name: auth-service
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/authservice:latest
+        imagePullPolicy: Always
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+        - containerPort: 9989
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - name: log-path
+          mountPath: /var/log/als
+      volumes:
+      - name: log-path
+        hostPath:
+          path: /var/log/als
+
+# service type ClusterIp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: auth-service
+    k8s-app: auth-service
+  name: auth-service
+spec:
+  ports:
+  - name: http
+    port: 9989
+    protocol: TCP
+    targetPort: 9989
+  type: ClusterIP
+  selector:
+    app: auth-service

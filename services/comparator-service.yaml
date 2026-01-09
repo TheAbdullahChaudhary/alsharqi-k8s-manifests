@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: comparator-service
+  name: comparator-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comparator-service
+  template:
+    metadata:
+      labels:
+        app: comparator-service
+    spec:
+      nodeSelector:
+        node: node2
+      containers:
+      - name: comparator-service
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/comparator-service:latest
+        imagePullPolicy: Always
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+        - containerPort: 9092
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - name: log-path
+          mountPath: /var/log/als
+      volumes:
+      - name: log-path
+        hostPath:
+          path: /var/log/als
+
+# service type ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: comparator-service
+    k8s-app: comparator-service
+  name: comparator-service
+spec:
+  ports:
+  - name: http
+    port: 9092
+    protocol: TCP
+    targetPort: 9092
+  type: ClusterIP
+  selector:
+    app: comparator-service

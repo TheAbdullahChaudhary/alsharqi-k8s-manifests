@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: finance-service
+  name: finance-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: finance-service
+  template:
+    metadata:
+      labels:
+        app: finance-service
+    spec:
+      nodeSelector:
+        node: node3
+      containers:
+      - name: finance-service
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/finance-service:latest
+        imagePullPolicy: Always
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+        - containerPort: 9998
+          name: http
+          protocol: TCP
+        - containerPort: 7001
+          name: grpc
+        volumeMounts:
+        - name: log-path
+          mountPath: /var/log/als
+      volumes:
+      - name: log-path
+        hostPath:
+          path: /var/log/als
+
+# service type ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: finance-service
+    k8s-app: finance-service
+  name: finance-service
+spec:
+  ports:
+  - name: http
+    port: 9998
+    protocol: TCP
+    targetPort: 9998
+  - name: grpc
+    port: 7001
+    targetPort: 7001
+  type: ClusterIP
+  selector:
+    app: finance-service

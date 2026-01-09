@@ -1,0 +1,15 @@
+grafana:
+  enabled: false
+
+loki:
+  enabled: true
+  config:
+    table_manager:
+      retention_deletes_enabled: true
+      retention_period: 360h  # 15 days = 15*24h
+  persistence:
+    enabled: true
+    storageClassName: gp2   # Ensure your EKS has gp2 StorageClass (default in most regions)
+    accessModes:
+      - ReadWriteOnce
+    size: 20Gi

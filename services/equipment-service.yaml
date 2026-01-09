@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: equipment-service
+  name: equipment-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: equipment-service
+  template:
+    metadata:
+      labels:
+        app: equipment-service
+    spec:
+      nodeSelector:
+        node: node2
+      containers:
+      - name: equipment-service
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/equipment-service:latest
+        imagePullPolicy: Always
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+        - containerPort: 9003
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - name: log-path
+          mountPath: /var/log/als
+      volumes:
+      - name: log-path
+        hostPath:
+          path: /var/log/als
+
+# service type ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: equipment-service
+    k8s-app: equipment-service
+  name: equipment-service
+spec:
+  ports:
+  - name: http
+    port: 9003
+    protocol: TCP
+    targetPort: 9003
+  type: ClusterIP
+  selector:
+    app: equipment-service

@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pricing-engine
+  name: pricing-engine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pricing-engine
+  template:
+    metadata:
+      labels:
+        app: pricing-engine
+    spec:
+      nodeSelector:
+        node: node2
+      containers:
+      - name: pricing-engine
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/pricing-engine:latest
+        imagePullPolicy: Always
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        ports:
+        - containerPort: 9100
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - name: log-path
+          mountPath: /var/log/als
+      volumes:
+      - name: log-path
+        hostPath:
+          path: /var/log/als
+
+# service type ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: pricing-engine
+    k8s-app: pricing-engine
+  name: pricing-engine
+spec:
+  ports:
+  - name: http
+    port: 9100
+    protocol: TCP
+    targetPort: 9100
+  type: ClusterIP
+  selector:
+    app: pricing-engine
