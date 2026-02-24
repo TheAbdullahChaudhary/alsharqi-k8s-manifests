@@ -18,7 +18,7 @@ spec:
         node: node2
       containers:
       - name: auth-service
-        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/authservice:latest
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/authservice:1
         imagePullPolicy: Always
         env:
           - name: MY_NODE_NAME
