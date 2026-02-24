@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: transport-service-v2
-          image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/transport-service-v2:latest
+          image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/transport-service-v2:1
           imagePullPolicy: Always
           env:
             - name: MY_NODE_NAME
