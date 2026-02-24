@@ -18,7 +18,7 @@ spec:
         node: node1  # Node Selection to Node 1 
       containers:
       - name: rate-service-v2
-        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/rate-service-v2:latest
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/rate-service-v2:1
         imagePullPolicy: Always
         env:
           - name: MY_NODE_NAME
