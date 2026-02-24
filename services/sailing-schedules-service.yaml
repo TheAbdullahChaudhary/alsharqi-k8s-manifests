@@ -18,7 +18,7 @@ spec:
         node: node2
       containers:
       - name: sailing-schedule-service
-        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/sailing-schedules-service:latest
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/sailing-schedules-service:2
         imagePullPolicy: Always
         env:
           - name: MY_NODE_NAME
