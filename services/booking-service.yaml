@@ -18,7 +18,7 @@ spec:
         node: node3
       containers:
       - name: booking-service
-        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/booking-service:latest
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/booking-service:1
         imagePullPolicy: Always
         env:
           - name: MY_NODE_NAME
