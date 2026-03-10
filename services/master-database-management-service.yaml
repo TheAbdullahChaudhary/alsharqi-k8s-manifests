@@ -19,7 +19,7 @@ spec:
     
       containers:
       - name: master-database-management-service
-        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/master-database-management-service:latest
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/master-database-management-service:6
         #image: 218828204349.dkr.ecr.eu-west-2.amazonaws.com/master-database-management-service-repo:latest
         imagePullPolicy: Always
         env:
