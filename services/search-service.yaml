@@ -18,7 +18,7 @@ spec:
         node: node1
       containers:
       - name: search-service
-        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/search-service:7
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/search-service:8
         imagePullPolicy: Always
         env:
           - name: CLUSTER_NODES
