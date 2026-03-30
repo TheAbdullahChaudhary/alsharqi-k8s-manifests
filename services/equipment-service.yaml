@@ -18,7 +18,7 @@ spec:
         node: node2
       containers:
       - name: equipment-service
-        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/equipment-service:latest
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/equipment-service:1
         imagePullPolicy: Always
         env:
           - name: MY_NODE_NAME
