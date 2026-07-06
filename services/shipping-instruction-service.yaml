@@ -18,7 +18,7 @@ spec:
         node: node2
       containers:
       - name: shipping-instruction-service
-        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/shipping-instruction-service:3
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/shipping-instruction-service:5
         imagePullPolicy: Always
         env:
           - name: MY_NODE_NAME
