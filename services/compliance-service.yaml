@@ -18,7 +18,7 @@ spec:
         node: node3
       containers:
       - name: compliance-service
-        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/compliance-service:latest
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/compliance-service:4
         imagePullPolicy: Always
         env:
           - name: MY_NODE_NAME
