@@ -18,7 +18,7 @@ spec:
         node: node3  # Node Selection to Node 3
       containers:
       - name: port-service
-        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/port-service:latest
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/port-service:3
         imagePullPolicy: Always
         env:
           - name: MY_NODE_NAME
