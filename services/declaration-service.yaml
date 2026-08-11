@@ -18,7 +18,7 @@ spec:
         node: node2
       containers:
       - name: declaration-service
-        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/declaration-service:latest
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/declaration-service:4
         imagePullPolicy: Always
         env:
           - name: MY_NODE_NAME
