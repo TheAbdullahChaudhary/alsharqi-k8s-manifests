@@ -18,7 +18,7 @@ spec:
         node: node2
       containers:
       - name: product-definition-service
-        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/product-definition-service:latest
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/product-definition-service:2
         imagePullPolicy: Always
         env:
           - name: MY_NODE_NAME
