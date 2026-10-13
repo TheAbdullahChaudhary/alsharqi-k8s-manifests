@@ -49,7 +49,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: sailing-schedules-service
+    name: sailing-schedule-service
   minReplicas: 1
   maxReplicas: 3
   metrics:
@@ -166,7 +166,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: notification-n-communication-service
+    name: notification-service
   minReplicas: 1
   maxReplicas: 3
   metrics:
@@ -1141,7 +1141,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: apigateway
+    name: api-gateway
   minReplicas: 1
   maxReplicas: 3
   metrics:
@@ -1180,7 +1180,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: product-definition-service
+    name: product-service
   minReplicas: 1
   maxReplicas: 3
   metrics:
@@ -1297,7 +1297,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: confsvr
+    name: config-server
   minReplicas: 1
   maxReplicas: 3
   metrics:

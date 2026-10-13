@@ -108,3 +108,12 @@ subjects:
   - kind: ServiceAccount
     name: cluster-autoscaler
     namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-autoscaler-extra
+rules:
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments","csistoragecapacities","csinodes","csidrivers"]
+    verbs: ["get","list","watch"]

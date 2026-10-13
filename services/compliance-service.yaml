@@ -42,8 +42,12 @@ spec:
           mountPath: /var/log/als
         resources:
           requests:
+            cpu: "50m"
+            memory: "256Mi"
             ephemeral-storage: "100Mi"
           limits:
+            cpu: "500m"
+            memory: "768Mi"
             ephemeral-storage: "500Mi"
       volumes:
       - name: log-path
