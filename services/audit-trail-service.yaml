@@ -5,7 +5,7 @@ metadata:
     app: audit-trail-service
   name: audit-trail-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: audit-trail-service

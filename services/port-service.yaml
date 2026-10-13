@@ -5,7 +5,7 @@ metadata:
     app: port-service
   name: port-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: port-service

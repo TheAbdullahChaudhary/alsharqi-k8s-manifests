@@ -5,7 +5,7 @@ metadata:
     app: shipping-instruction-service
   name: shipping-instruction-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: shipping-instruction-service

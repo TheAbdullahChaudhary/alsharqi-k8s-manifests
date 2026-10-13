@@ -5,7 +5,7 @@ metadata:
     app: sailing-schedule-service
   name: sailing-schedule-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: sailing-schedule-service

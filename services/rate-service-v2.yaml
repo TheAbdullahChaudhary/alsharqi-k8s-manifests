@@ -5,7 +5,7 @@ metadata:
     app: rate-service-v2
   name: rate-service-v2
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: rate-service-v2

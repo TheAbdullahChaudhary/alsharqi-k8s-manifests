@@ -5,7 +5,7 @@ metadata:
     app: track-n-trace-service
   name: track-n-trace-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: track-n-trace-service

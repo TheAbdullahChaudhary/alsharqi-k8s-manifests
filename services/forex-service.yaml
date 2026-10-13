@@ -5,7 +5,7 @@ metadata:
     app: forex-service
   name: forex-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: forex-service
