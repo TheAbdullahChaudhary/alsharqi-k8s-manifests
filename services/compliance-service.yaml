@@ -5,7 +5,7 @@ metadata:
     app: compliance-service
   name: compliance-service
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: compliance-service

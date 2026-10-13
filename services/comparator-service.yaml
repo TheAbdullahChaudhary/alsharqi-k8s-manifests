@@ -5,7 +5,7 @@ metadata:
     app: comparator-service
   name: comparator-service
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: comparator-service
