@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: rate-service-v2
+  namespace: default
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: rate-service-v2
