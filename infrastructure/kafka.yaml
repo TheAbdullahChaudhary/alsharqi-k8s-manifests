@@ -62,6 +62,8 @@ spec:
               value: PLAINTEXT://my-cluster-kafka-bootstrap:9092
             - name: ALLOW_PLAINTEXT_LISTENER
               value: "yes"
+            - name: KAFKA_HEAP_OPTS
+              value: "-Xms256m -Xmx768m"
           volumeMounts:
             - name: kafka-data
               mountPath: /bitnami/kafka

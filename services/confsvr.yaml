@@ -20,6 +20,8 @@ spec:
       - name: config-server
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/confsvr:latest
         imagePullPolicy: Always
+          - name: JAVA_TOOL_OPTIONS
+            value: "-Xms32m -Xmx192m -XX:+UseContainerSupport -XX:MaxMetaspaceSize=128m -Xss256k"
         ports:
         - containerPort: 8888
           name: http

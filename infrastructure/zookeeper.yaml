@@ -40,6 +40,8 @@ spec:
           env:
             - name: ALLOW_ANONYMOUS_LOGIN
               value: "yes"
+            - name: JVMFLAGS
+              value: "-Xms64m -Xmx512m"
           volumeMounts:
             - name: data
               mountPath: /bitnami/zookeeper

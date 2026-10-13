@@ -33,10 +33,19 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
+          - name: JAVA_TOOL_OPTIONS
+            value: "-Xms64m -Xmx384m -XX:+UseContainerSupport -XX:MaxMetaspaceSize=128m -Xss256k"
         ports:
         - containerPort: 8188
           name: http
           protocol: TCP
+        resources:
+          requests:
+            memory: "384Mi"
+            cpu: "100m"
+          limits:
+            memory: "640Mi"
+            cpu: "500m"
         volumeMounts:
         - name: log-path
           mountPath: /var/log/als
