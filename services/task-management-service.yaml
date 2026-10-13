@@ -5,7 +5,7 @@ metadata:
     app: task-management-service
   name: task-management-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: task-management-service
