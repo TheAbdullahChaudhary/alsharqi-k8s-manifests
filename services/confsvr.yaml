@@ -21,6 +21,13 @@ spec:
         env:
           - name: JAVA_TOOL_OPTIONS
             value: "-Xms32m -Xmx192m -XX:+UseContainerSupport -XX:MaxMetaspaceSize=128m -Xss256k"
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "128Mi"
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
         ports:
         - containerPort: 8888
           name: http
