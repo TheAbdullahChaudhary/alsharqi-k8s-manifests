@@ -44,9 +44,9 @@ spec:
               value: "-Xms512m -Xmx512m"
           resources:
             limits:
-              memory: 1Gi
+              memory: 2Gi
               cpu: "1"
             requests:
-              memory: 512Mi
+              memory: 1Gi
               cpu: "0.5"
 
