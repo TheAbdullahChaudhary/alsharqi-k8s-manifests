@@ -38,7 +38,7 @@ spec:
                   key: db-password
                 
             - name: JAVA_TOOL_OPTIONS
-            value: "-Xms64m -Xmx256m -XX:+UseContainerSupport -XX:MaxMetaspaceSize=128m -Xss256k"
+              value: "-Xms64m -Xmx256m -XX:+UseContainerSupport -XX:MaxMetaspaceSize=128m -Xss256k"
         ports:
             - containerPort: 9095
               name: http
