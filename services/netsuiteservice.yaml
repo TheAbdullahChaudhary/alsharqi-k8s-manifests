@@ -14,8 +14,6 @@ spec:
       labels:
         app: netsuite-service
     spec:
-      nodeSelector:
-        node: node2
       containers:
       - name: netsuite-service
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/netsuite-service:3

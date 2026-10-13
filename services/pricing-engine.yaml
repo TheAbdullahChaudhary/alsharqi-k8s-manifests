@@ -14,8 +14,6 @@ spec:
       labels:
         app: pricing-engine
     spec:
-      nodeSelector:
-        node: node2
       containers:
       - name: pricing-engine
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/pricing-engine:4

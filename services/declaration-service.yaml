@@ -14,8 +14,6 @@ spec:
       labels:
         app: declaration-service
     spec:
-      nodeSelector:
-        node: node2
       containers:
       - name: declaration-service
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/declaration-service:6

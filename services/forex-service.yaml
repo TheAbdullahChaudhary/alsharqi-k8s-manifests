@@ -14,8 +14,6 @@ spec:
       labels:
         app: forex-service
     spec:
-      nodeSelector:
-        node: node2
       containers:
       - name: forex-service
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/forex-service:2

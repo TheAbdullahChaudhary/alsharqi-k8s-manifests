@@ -14,8 +14,6 @@ spec:
       labels:
         app: email-service
     spec:
-      nodeSelector:
-        node: node3
       containers:
       - name: email-service
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/email-service:6

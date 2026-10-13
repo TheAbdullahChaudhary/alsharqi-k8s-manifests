@@ -14,8 +14,6 @@ spec:
       labels:
         app: port-service
     spec:
-      nodeSelector:
-        node: node3  # Node Selection to Node 3
       containers:
       - name: port-service
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/port-service:5

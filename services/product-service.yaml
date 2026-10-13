@@ -14,8 +14,6 @@ spec:
       labels:
         app: product-service
     spec:
-      nodeSelector:
-        node: node1  # Node Selection to Node 1
       containers:
       - name: product-service
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/product-service:3

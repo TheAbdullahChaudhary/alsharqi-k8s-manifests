@@ -14,8 +14,6 @@ spec:
       labels:
         app: comparator-service
     spec:
-      nodeSelector:
-        node: node2
       containers:
       - name: comparator-service
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/comparator-service:3

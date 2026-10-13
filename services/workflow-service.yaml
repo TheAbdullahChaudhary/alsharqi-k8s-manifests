@@ -14,8 +14,6 @@ spec:
       labels:
         app: workflow-service
     spec:
-      nodeSelector:
-        node: node3
       containers:
       - name: workflow-service
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/workflow-service:4

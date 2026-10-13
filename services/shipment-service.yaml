@@ -14,8 +14,6 @@ spec:
       labels:
         app: shipment-service
     spec:
-      nodeSelector:
-        node: node1  # Node selection 
       containers:
       - name: shipment-service
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/shipment-service:13

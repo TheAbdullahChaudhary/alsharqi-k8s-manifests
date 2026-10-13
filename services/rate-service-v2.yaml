@@ -14,8 +14,6 @@ spec:
       labels:
         app: rate-service-v2
     spec:
-      nodeSelector:
-        node: node1  # Node Selection to Node 1 
       containers:
       - name: rate-service-v2
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/rate-service-v2:11

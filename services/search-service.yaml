@@ -14,8 +14,6 @@ spec:
       labels:
         app: search-service
     spec:
-      nodeSelector:
-        node: node1
       containers:
       - name: search-service
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/search-service:11

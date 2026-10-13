@@ -14,8 +14,6 @@ spec:
       labels:
         app: api-gateway
     spec:
-      nodeSelector:
-        node: node2
       containers:
       - name: api-gateway
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/apigateway:latest
