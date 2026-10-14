@@ -5,7 +5,7 @@ metadata:
     app: sailing-schedule-service
   name: sailing-schedule-service
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: sailing-schedule-service
@@ -14,6 +14,8 @@ spec:
       labels:
         app: sailing-schedule-service
     spec:
+      nodeSelector:
+        node: node2
       containers:
       - name: sailing-schedule-service
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/sailing-schedules-service:18
@@ -31,19 +33,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          - name: JAVA_TOOL_OPTIONS
-            value: "-Xms64m -Xmx512m -XX:+UseContainerSupport -XX:MaxMetaspaceSize=128m -Xss256k"
         ports:
         - containerPort: 9089
           name: http
           protocol: TCP
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "50m"
-          limits:
-            memory: "768Mi"
-            cpu: "300m"
         volumeMounts:
         - name: log-path
           mountPath: /var/log/als

@@ -14,6 +14,8 @@ spec:
       labels:
         app: preferences-service
     spec:
+      nodeSelector:
+        node: node1  # Node Selection to Node 1
       containers:
       - name: preferences-service
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/preferences-service:3
@@ -31,19 +33,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          - name: JAVA_TOOL_OPTIONS
-            value: "-Xms64m -Xmx320m -XX:+UseContainerSupport -XX:MaxMetaspaceSize=128m -Xss256k"
         ports:
         - containerPort: 9099
           name: http
           protocol: TCP
-        resources:
-          requests:
-            memory: "320Mi"
-            cpu: "50m"
-          limits:
-            memory: "768Mi"
-            cpu: "300m"
         volumeMounts:
         - name: log-path
           mountPath: /var/log/als

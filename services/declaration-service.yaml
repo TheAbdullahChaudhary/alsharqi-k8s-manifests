@@ -14,6 +14,8 @@ spec:
       labels:
         app: declaration-service
     spec:
+      nodeSelector:
+        node: node2
       containers:
       - name: declaration-service
         image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/declaration-service:6
@@ -31,19 +33,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          - name: JAVA_TOOL_OPTIONS
-            value: "-Xms64m -Xmx320m -XX:+UseContainerSupport -XX:MaxMetaspaceSize=128m -Xss256k"
         ports:
         - containerPort: 9212
           name: http
           protocol: TCP
-        resources:
-          requests:
-            memory: "320Mi"
-            cpu: "50m"
-          limits:
-            memory: "576Mi"
-            cpu: "300m"
         volumeMounts:
         - name: log-path
           mountPath: /var/log/als
