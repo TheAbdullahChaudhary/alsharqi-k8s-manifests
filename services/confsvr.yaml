@@ -18,7 +18,7 @@ spec:
         node: node3
       containers:
       - name: config-server
-        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/confsvr:4
+        image: 218828204349.dkr.ecr.us-east-2.amazonaws.com/confsvr:5
         imagePullPolicy: Always
         ports:
         - containerPort: 8888
