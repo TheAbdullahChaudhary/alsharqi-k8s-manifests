@@ -24,6 +24,24 @@ spec:
         - containerPort: 8888
           name: http
           protocol: TCP
+        env:
+        - name: SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: config-repo-credentials
+              key: username
+        - name: SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: config-repo-credentials
+              key: password
+        readinessProbe:
+          tcpSocket:
+            port: 8888
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 6
 # service type ClusterIP
 ---
 apiVersion: v1
